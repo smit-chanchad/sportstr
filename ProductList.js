@@ -7,8 +7,17 @@ class ProductList extends Component {
   onClickAddToCart = async (item) => {
     this.props.addToCart(item);
   };
+
   render() {
-    const products = data?.products;
+    let products = data?.products;
+    let cat = this.props.location?.state;
+
+    if (cat && cat !== "All") {
+      products = products.filter(
+        (p) => p.category.toLowerCase() === cat?.toLowerCase()
+      );
+      console.log("products", products);
+    }
     if (products == null || products.length === 0) {
       return <h5 className="p-2">No Products</h5>;
     }
